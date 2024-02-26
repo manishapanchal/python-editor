@@ -47,6 +47,7 @@
   border: 1px solid #d1d5db;
   border-radius: 8px;
   margin-bottom: 3px;
+  min-height: 220px;
 }
 
 .ce-toolbar__content {
@@ -82,4 +83,14 @@
   border-radius: 8px;
   border: 1px solid rgb(209, 213, 219);
   background-color: rgb(255, 255, 255);
+}
+
+
+.codeflask.codeflask--has-line-numbers:before{
+  background: transparent !important;
+}
+
+.editorjs-codeFlask_Wrapper .codeflask.codeflask--has-line-numbers:before {
+  background: transparent !important;
+
 }

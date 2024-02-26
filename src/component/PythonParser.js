@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { useScript } from "usehooks-ts";
 
-const PythonParser = () => {
+const PythonParser = ({ editorInstance }) => {
+  const [output, setOutput] = useState(null);
   const [pyodide, setPyodide] = useState(null);
   const [pyodideLoaded, setPyodideLoaded] = useState(false);
   const pyodideStatus = useScript(
@@ -17,7 +18,7 @@ const PythonParser = () => {
     const res = await globalThis.loadPyodide({ indexURL });
     setPyodide(res);
     setPyodideLoaded(true);
-    console.log("res = ", res);
+    // console.log("res = ", res);
   };
 
   useEffect(() => {
@@ -27,25 +28,37 @@ const PythonParser = () => {
     }
   }, [pyodideStatus]);
 
-  async function callThis() {
-    const myPython = `
-                def func():
-                    return 5 + 7
-                func() `;
-    if (pyodideLoaded) {
-      console.log(pyodide);
-      let element = document.getElementById("replace");
-      element.innerHTML = pyodide.runPython(myPython);
-    } else {
-      console.log("Pyodide not loaded yet");
+  async function excuteCode() {
+    try {
+      if (editorInstance?.current) {
+        // setLoading(true);
+        const savedData = await editorInstance.current.save();
+        if (pyodideLoaded) {
+          console.log("Saved Data:", savedData);
+          const result = savedData.blocks.map((item) => {
+            try {
+              const codeString = pyodide?.runPython(item?.data?.code);
+              return codeString;
+            } catch (pythonError) {
+              console.log("error = ", pythonError, typeof err);
+              return pythonError.toString();
+            }
+          });
+          setOutput(result);
+        } else {
+          alert("Please try again later");
+        }
+      }
+    } catch (error) {
+      console.log("error = ", error);
+      alert("Please try again later");
     }
   }
 
   return (
     <div>
-      <h1>loading</h1>
-      <div id='replace'>Replace this</div>
-      <button onClick={callThis}>Execute Python</button>
+      <button onClick={excuteCode}>Run</button>
+      <div>{output}</div>
     </div>
   );
 };
