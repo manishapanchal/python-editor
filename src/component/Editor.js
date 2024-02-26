@@ -8,7 +8,8 @@ const Editor = ({ editorInstance }) => {
     editorInstance.current = new EditorJS({
       holder: "editorjs",
       tools: {
-        code: editorjsCodeflask,
+        paragraph: editorjsCodeflask,
+        // code: editorjsCodeflask,
       },
     });
   }, [editorInstance]);
