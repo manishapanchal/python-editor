@@ -85,11 +85,12 @@ output = mystdout.getvalue()
     }
   }
   const clearCode = () => {
-    if (editorInstance?.current?.clear) {
-      editorInstance?.current?.clear();
-    } else {
-      console.error("Editor instance or editor is not available.");
-    }
+    setOutput(null);
+    // if (editorInstance?.current?.clear) {
+    //   editorInstance?.current?.clear();
+    // } else {
+    //   console.error("Editor instance or editor is not available.");
+    // }
   };
 
   return (
