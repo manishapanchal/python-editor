@@ -123,3 +123,9 @@ button {
   font-size: 30px;
   font-family: poppins-extralight, poppins, sans-serif;
 }
+
+.clearBtn{
+  margin-right: 12px;
+  border:1px solid #f2bf5e;
+  background:transparent
+}

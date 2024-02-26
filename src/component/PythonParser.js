@@ -52,25 +52,29 @@ output = mystdout.getvalue()
         const savedData = await editorInstance.current.save();
         if (pyodideLoaded) {
           // console.log("Saved Data:", savedData);
-          const result = savedData?.blocks?.map((item) => {
-            try {
-              const containsPrint = item?.data?.code.includes("print");
-              pyodide.globals.set("output", "");
-              let executedCode = "";
-              if (containsPrint) {
-                executedCode = compileCodeWithPrint(item?.data?.code);
-              } else {
-                executedCode = pyodide?.runPython(item?.data?.code);
+          if (savedData.blocks?.length > 0) {
+            const result = savedData.blocks?.map((item) => {
+              try {
+                const containsPrint = item?.data?.code.includes("print");
+                pyodide.globals.set("output", "");
+                let executedCode = "";
+                if (containsPrint) {
+                  executedCode = compileCodeWithPrint(item?.data?.code);
+                } else {
+                  executedCode = pyodide?.runPython(item?.data?.code);
+                }
+                setShowErr(false);
+                return executedCode;
+              } catch (pythonError) {
+                console.log("error = ", pythonError, typeof err);
+                setShowErr(true);
+                return pythonError.toString();
               }
-              setShowErr(false);
-              return executedCode;
-            } catch (pythonError) {
-              console.log("error = ", pythonError, typeof err);
-              setShowErr(true);
-              return pythonError.toString();
-            }
-          });
-          setOutput(result);
+            });
+            setOutput(result);
+          } else {
+            alert("There is no code to compile");
+          }
         } else {
           alert("Please try again later");
         }
@@ -80,9 +84,19 @@ output = mystdout.getvalue()
       alert("Please try again later");
     }
   }
+  const clearCode = () => {
+    if (editorInstance?.current?.clear) {
+      editorInstance?.current?.clear();
+    } else {
+      console.error("Editor instance or editor is not available.");
+    }
+  };
 
   return (
     <div>
+      <button className='clearBtn' onClick={clearCode}>
+        Clear
+      </button>
       <button onClick={excuteCode}>Run</button>
       <div className={showErr ? "output err" : "output"}>{output}</div>
     </div>
