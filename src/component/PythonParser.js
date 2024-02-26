@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useScript } from "usehooks-ts";
 
-const PythonParser = ({ editorInstance }) => {
+const PythonParser = ({ editorInstance: value }) => {
   const [output, setOutput] = useState(null);
   const [pyodide, setPyodide] = useState(null);
   const [showErr, setShowErr] = useState(false);
@@ -29,73 +29,52 @@ const PythonParser = ({ editorInstance }) => {
     }
   }, [pyodideStatus]);
 
-  function compileCodeWithPrint(code) {
-    let output = pyodide.runPython(`
+  const clearCode = () => {
+    setOutput(null);
+  };
+
+  const handleRunCode = async () => {
+    const code = `
 import sys
 from io import StringIO
-              
+
 # Redirect stdout
 sys.stdout = mystdout = StringIO()
-              
-${code}
-              
+
+${value}
+
 # Get the value of stdout
 output = mystdout.getvalue()
-                      `);
-    output = pyodide.globals.get("output").toString();
-    return output ? output.split("\n") : [];
-  }
-
-  async function excuteCode() {
+      `;
+    console.log("value", value);
+    console.log("code", code);
+    setShowErr(false);
     try {
-      if (editorInstance?.current) {
-        const savedData = await editorInstance.current.save();
-        if (pyodideLoaded) {
-          console.log("Saved Data:", savedData);
-          if (savedData.blocks?.length > 0) {
-            const result = savedData.blocks?.map((item) => {
-              try {
-                const containsPrint = item?.data?.code.includes("print");
-                pyodide.globals.set("output", "");
-                let executedCode = "";
-                if (containsPrint) {
-                  executedCode = compileCodeWithPrint(item?.data?.code);
-                } else {
-                  executedCode = pyodide?.runPython(item?.data?.code);
-                }
-                setShowErr(false);
-                return executedCode;
-              } catch (pythonError) {
-                console.log("error = ", pythonError, typeof err);
-                setShowErr(true);
-                return pythonError.toString();
-              }
-            });
-            setOutput(result);
-          } else {
-            alert("There is no code to compile");
-          }
-        } else {
-          alert("Please try again later");
-        }
+      const containsPrint = value.includes("print");
+      if (containsPrint) {
+        pyodide?.runPython(code);
+        console.log("executedCode", pyodide.globals.get("output").toString());
+        setOutput(pyodide.globals.get("output").toString());
+      }
+
+      if (!pyodide.globals.get("output").toString()) {
+        pyodide
+          .runPythonAsync(value)
+          .then((output) => setOutput(output))
+          .catch((error) => setOutput(`Error: ${error.toString()}`));
       }
     } catch (error) {
-      console.log("error = ", error);
-      alert("Please try again later");
-    }
-  }
-  const clearCode = () => {
-    if (editorInstance?.current?.clear) {
-      editorInstance?.current?.clear();
-    } else {
-      console.error("Editor instance or editor is not available.");
+      setShowErr(true);
+      setOutput(`Error: ${error.toString()}`);
+      console.log("Error", error);
+      return error.toString();
     }
   };
 
   return (
     <div className="console">
       <div className="button-container">
-        <button onClick={excuteCode}>Run</button>
+        <button onClick={handleRunCode}>Run</button>
       </div>
       <div className="output">
         <div className="console-header">
