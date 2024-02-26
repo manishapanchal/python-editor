@@ -29,20 +29,41 @@ const PythonParser = ({ editorInstance }) => {
     }
   }, [pyodideStatus]);
 
+  function compileCodeWithPrint(code) {
+    let output = pyodide.runPython(`
+import sys
+from io import StringIO
+              
+# Redirect stdout
+sys.stdout = mystdout = StringIO()
+              
+${code}
+              
+# Get the value of stdout
+output = mystdout.getvalue()
+                      `);
+    output = pyodide.globals.get("output").toString();
+    return output ? output.split("\n") : [];
+  }
+
   async function excuteCode() {
     try {
       if (editorInstance?.current) {
-        // setLoading(true);
         const savedData = await editorInstance.current.save();
         if (pyodideLoaded) {
-          console.log("Saved Data:", savedData);
-          const result = savedData.blocks.map((item) => {
+          // console.log("Saved Data:", savedData);
+          const result = savedData?.blocks?.map((item) => {
             try {
-              const codeString = pyodide?.runPython(item?.data?.code);
+              const containsPrint = item?.data?.code.includes("print");
+              pyodide.globals.set("output", "");
+              let executedCode = "";
+              if (containsPrint) {
+                executedCode = compileCodeWithPrint(item?.data?.code);
+              } else {
+                executedCode = pyodide?.runPython(item?.data?.code);
+              }
               setShowErr(false);
-              return codeString === undefined
-                ? "nothing is returned from code"
-                : codeString;
+              return executedCode;
             } catch (pythonError) {
               console.log("error = ", pythonError, typeof err);
               setShowErr(true);
