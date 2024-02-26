@@ -28,10 +28,14 @@ const Editor = ({ editorInstance }) => {
   }, [initializeEditor]);
 
   return (
-    <div className='editoContainer'>
-      <div className='heading'>Pyhton Editor</div>
-      <div id='editorjs'></div>
-      <PythonParser editorInstance={editorInstance} />
+    <div className="main">
+      <div className="heading">
+        <h1>Pyhton Editor</h1>
+      </div>
+      <div className="cols">
+        <div id="editorjs"></div>
+        <PythonParser editorInstance={editorInstance} />
+      </div>
     </div>
   );
 };

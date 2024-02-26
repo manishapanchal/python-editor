@@ -3,96 +3,76 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  /* background-color: #282c34; */
-  background-color: rgb(249, 250, 251);
-
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.ce-block__content,
-.output {
-  background: #f9f9f9;
-  max-width: 90%;
-  padding: 5px 10px;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  margin-bottom: 3px;
-  min-height: 220px;
-}
-
-.ce-toolbar__content {
-  max-width: 90%;
-  margin: 0 auto;
+.main {
   position: relative;
-  .ce-toolbar__actions {
-    padding-right: 15px;
-    margin-top: 5px;
-  }
+}
+
+.heading {
+  background: rgb(9, 37, 56);
+  margin-bottom: 10px;
+}
+
+.heading h1 {
+  font-family: poppins-extralight, poppins, sans-serif;
+  color: #f2bf5e;
+  font-weight: 500;
+  font-size: 21px;
+  margin: 0;
+  padding: 15px 0px;
+}
+.cols {
+  display: flex;
+  justify-content: space-between;
+  width: 98%;
+  margin: auto;
+}
+
+#editorjs,
+.console {
+  width: 100%;
+}
+.ce-toolbar__actions {
+  padding-right: 15px;
+  margin-top: 5px;
+  display: none;
 }
 
 .codex-editor__redactor {
-  padding-bottom: 20px !important;
+  padding-bottom: 0px !important;
 }
 
 .ce-block__content {
   text-align: start;
+  max-width: 100% !important;
 }
 
 .codeflask.codeflask--has-line-numbers:before {
   background: transparent !important;
 }
 
+.editorjs-codeFlask_Wrapper {
+  height: calc(100vh - 80px) !important;
+  border: 1px solid #dcdfe6;
+  border-radius: 5px;
+  background-color: #f0f2f5;
+  margin-bottom: 10px;
+}
 .editorjs-codeFlask_Wrapper .codeflask.codeflask--has-line-numbers:before {
   background: transparent !important;
 }
-
-.editorContainer {
-  width: 60%;
-  max-width: 800px;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.codex-editor--narrow .codex-editor__redactor {
+  margin: 0px !important;
 }
 
-#editorjs {
-  margin-bottom: 20px;
+.button-container {
+  position: absolute;
+  top: 5px;
+  right: 20px;
 }
 
 button {
   background-color: #f2bf5e;
-  color: #000;
+  color: #fff;
   border: none;
   padding: 10px 20px;
   font-size: 16px;
@@ -102,30 +82,41 @@ button {
   transition: background-color 0.3s;
 }
 
-
-
 .output {
-  margin: 20px auto;
+  margin-left: 5px;
   white-space: pre-wrap;
   text-align: start;
+  background: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+  height: calc(100vh - 80px) !important;
+}
+
+.output .console-container {
+  padding: 10px;
 }
 
 .err {
   color: red;
 }
 
-.heading {
-  color: #f2bf5e;
-  padding: 25px 10%;
+.console-header {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  display: flex;
+  justify-content: space-between;
   background: rgb(9, 37, 56);
-  margin-bottom: 40px;
-  font-weight: 500;
-  font-size: 30px;
-  font-family: poppins-extralight, poppins, sans-serif;
+  color: #fff;
+  align-items: center;
+  padding: 8px 10px;
 }
 
-.clearBtn{
-  margin-right: 12px;
-  border:1px solid #f2bf5e;
-  background:transparent
+.console-header p {
+  margin: 0;
+}
+
+.console-header span {
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
 }

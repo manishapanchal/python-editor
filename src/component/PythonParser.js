@@ -51,7 +51,7 @@ output = mystdout.getvalue()
       if (editorInstance?.current) {
         const savedData = await editorInstance.current.save();
         if (pyodideLoaded) {
-          // console.log("Saved Data:", savedData);
+          console.log("Saved Data:", savedData);
           if (savedData.blocks?.length > 0) {
             const result = savedData.blocks?.map((item) => {
               try {
@@ -93,12 +93,21 @@ output = mystdout.getvalue()
   };
 
   return (
-    <div>
-      <button className='clearBtn' onClick={clearCode}>
-        Clear
-      </button>
-      <button onClick={excuteCode}>Run</button>
-      <div className={showErr ? "output err" : "output"}>{output}</div>
+    <div className="console">
+      <div className="button-container">
+        <button onClick={excuteCode}>Run</button>
+      </div>
+      <div className="output">
+        <div className="console-header">
+          <p>console</p>
+          <span onClick={clearCode}>clear</span>
+        </div>
+        <div
+          className={showErr ? "console-container err" : "console-container"}
+        >
+          {output}
+        </div>
+      </div>
     </div>
   );
 };
