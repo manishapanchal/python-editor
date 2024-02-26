@@ -40,8 +40,8 @@
   }
 }
 
-.ce-block__content {
-  background: #ffffff;
+.ce-block__content,.output {
+  background: #f9f9f9;
   max-width: 90%;
   padding: 5px 10px;
   border: 1px solid #d1d5db;
@@ -64,27 +64,9 @@
   padding-bottom: 20px !important;
 }
 
-.editoContainer {
-  margin: 70px 20px;
-}
-
 .ce-block__content{
   text-align: start;
 }
-
-.runButton {
-  outline: none;
-  cursor: pointer;
-  font-size: 12px;
-  font-weight: 500;
-  padding: 8px 12px;
-  margin-right: 8px;
-  font-family: Inter;
-  border-radius: 8px;
-  border: 1px solid rgb(209, 213, 219);
-  background-color: rgb(255, 255, 255);
-}
-
 
 .codeflask.codeflask--has-line-numbers:before{
   background: transparent !important;
@@ -94,3 +76,43 @@
   background: transparent !important;
 
 }
+
+.editorContainer {
+  width: 60%;
+  max-width: 800px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#editorjs {
+  margin-bottom: 20px;
+}
+
+button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-family: Inter;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.output {
+  margin: 20px auto; 
+  white-space: pre-wrap;
+  text-align: start;
+}
+
+.err{
+  color:red
+}
+
