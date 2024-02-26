@@ -6,7 +6,7 @@ const PythonParser = ({ editorInstance: value }) => {
   const [output, setOutput] = useState(null);
   const [pyodide, setPyodide] = useState(null);
   const [showErr, setShowErr] = useState(false);
-  const [pyodideLoaded, setPyodideLoaded] = useState(false);
+
   const pyodideStatus = useScript(
     "https://cdn.jsdelivr.net/pyodide/v0.21.2/full/pyodide.js",
     {
@@ -18,8 +18,6 @@ const PythonParser = ({ editorInstance: value }) => {
     const indexURL = "https://cdn.jsdelivr.net/pyodide/v0.21.2/full/";
     const res = await globalThis.loadPyodide({ indexURL });
     setPyodide(res);
-    setPyodideLoaded(true);
-    // console.log("res = ", res);
   };
 
   useEffect(() => {
