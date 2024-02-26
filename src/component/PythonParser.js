@@ -5,6 +5,7 @@ import { useScript } from "usehooks-ts";
 const PythonParser = ({ editorInstance }) => {
   const [output, setOutput] = useState(null);
   const [pyodide, setPyodide] = useState(null);
+  const [showErr, setShowErr] = useState(false);
   const [pyodideLoaded, setPyodideLoaded] = useState(false);
   const pyodideStatus = useScript(
     "https://cdn.jsdelivr.net/pyodide/v0.21.2/full/pyodide.js",
@@ -38,9 +39,13 @@ const PythonParser = ({ editorInstance }) => {
           const result = savedData.blocks.map((item) => {
             try {
               const codeString = pyodide?.runPython(item?.data?.code);
-              return codeString;
+              setShowErr(false);
+              return codeString === undefined
+                ? "nothing is returned from code"
+                : codeString;
             } catch (pythonError) {
               console.log("error = ", pythonError, typeof err);
+              setShowErr(true);
               return pythonError.toString();
             }
           });
@@ -58,7 +63,7 @@ const PythonParser = ({ editorInstance }) => {
   return (
     <div>
       <button onClick={excuteCode}>Run</button>
-      <div>{output}</div>
+      <div className={showErr ? "output err" : "output"}>{output}</div>
     </div>
   );
 };

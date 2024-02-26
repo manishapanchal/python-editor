@@ -28,7 +28,7 @@ const Editor = ({ editorInstance }) => {
 
   return (
     <div className='editoContainer'>
-      <h1>Pyhton Editor</h1>
+      <div className='heading'>Pyhton Editor</div>
       <div id='editorjs'></div>
       <PythonParser editorInstance={editorInstance} />
     </div>

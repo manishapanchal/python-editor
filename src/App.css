@@ -16,7 +16,7 @@
 
 .App-header {
   /* background-color: #282c34; */
-  background-color:rgb(249, 250, 251);
+  background-color: rgb(249, 250, 251);
 
   min-height: 100vh;
   display: flex;
@@ -40,7 +40,8 @@
   }
 }
 
-.ce-block__content,.output {
+.ce-block__content,
+.output {
   background: #f9f9f9;
   max-width: 90%;
   padding: 5px 10px;
@@ -64,17 +65,16 @@
   padding-bottom: 20px !important;
 }
 
-.ce-block__content{
+.ce-block__content {
   text-align: start;
 }
 
-.codeflask.codeflask--has-line-numbers:before{
+.codeflask.codeflask--has-line-numbers:before {
   background: transparent !important;
 }
 
 .editorjs-codeFlask_Wrapper .codeflask.codeflask--has-line-numbers:before {
   background: transparent !important;
-
 }
 
 .editorContainer {
@@ -91,8 +91,8 @@
 }
 
 button {
-  background-color: #007bff;
-  color: #fff;
+  background-color: #f2bf5e;
+  color: #000;
   border: none;
   padding: 10px 20px;
   font-size: 16px;
@@ -102,17 +102,24 @@ button {
   transition: background-color 0.3s;
 }
 
-button:hover {
-  background-color: #0056b3;
-}
+
 
 .output {
-  margin: 20px auto; 
+  margin: 20px auto;
   white-space: pre-wrap;
   text-align: start;
 }
 
-.err{
-  color:red
+.err {
+  color: red;
 }
 
+.heading {
+  color: #f2bf5e;
+  padding: 25px 10%;
+  background: rgb(9, 37, 56);
+  margin-bottom: 40px;
+  font-weight: 500;
+  font-size: 30px;
+  font-family: poppins-extralight, poppins, sans-serif;
+}
